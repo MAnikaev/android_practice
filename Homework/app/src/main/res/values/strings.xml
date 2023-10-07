@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Homework</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="type_text">Введите текст</string>
+    <string name="go_next">Далее</string>
+    <string name="second_fragment">Второй фрагмент</string>
+    <string name="first_button">Первая кнопка</string>
+    <string name="second_button">Вторая кнопка</string>
+    <string name="third_fragment">Третий фрагмент</string>
 </resources>
