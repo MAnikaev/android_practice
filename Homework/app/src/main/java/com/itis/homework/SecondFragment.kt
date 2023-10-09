@@ -11,20 +11,13 @@ class SecondFragment : BaseFragment(R.layout.fragment_second) {
 
     private val binding by viewBinding(FragmentSecondBinding::bind)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_second, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         initButtons()
     }
 
-    private fun initViews() {
+    override fun initViews() {
         with(binding) {
             val title = arguments?.getString(ParamsKeys.SECOND_FRAGMENT_TITLE_KEY)
             if(title?.isNotEmpty() == true){
@@ -35,28 +28,36 @@ class SecondFragment : BaseFragment(R.layout.fragment_second) {
     private fun initButtons() {
         binding.let {bnd ->
             (requireActivity() as? BaseActivity)?.let {act ->
+                val text = bnd.titleTv.text.toString()
+                var firstFragmentTitleText = ""
+                var thirdFragmentTitleText = ""
+                if(text != "Второй фрагмент") {
+                    thirdFragmentTitleText = text
+                    firstFragmentTitleText = text
+                } else {
+                    thirdFragmentTitleText = "Третий фрагмент"
+                }
                 bnd.firstBtn.setOnClickListener {
-                    val text = bnd.titleTv.text.toString()
                     act.goToScreen(
                         action = ActionType.Replace,
-                        destination = ThirdFragment.getInstance(text),
+                        destination = ThirdFragment.getInstance(thirdFragmentTitleText),
                         isAddToBackStack = false
                     )
                     act.goToScreen(
                         action = ActionType.Replace,
-                        destination = FirstFragment.getInstance("Первый фрагмент", text),
+                        destination = FirstFragment.getInstance("Первый фрагмент", firstFragmentTitleText),
                         isAddToBackStack = true
                     )
                     act.goToScreen(
                         action = ActionType.Replace,
-                        destination = ThirdFragment.getInstance(text),
+                        destination = ThirdFragment.getInstance(thirdFragmentTitleText),
                         isAddToBackStack = true
                     )
                 }
                 bnd.secondBtn.setOnClickListener {
                     act.goToScreen(
                         action = ActionType.Replace,
-                        destination = FirstFragment.getInstance("Первый фрагмент"),
+                        destination = FirstFragment.getInstance("Первый фрагмент", firstFragmentTitleText),
                         isAddToBackStack = true
                     )
                 }
@@ -65,7 +66,7 @@ class SecondFragment : BaseFragment(R.layout.fragment_second) {
     }
     companion object {
         const val SECOND_FRAGMENT_TAG = "SECOND_FRAGMENT_TAG"
-        fun getInstance(title: String?) =
+        fun getInstance(title: String? = "Второй фрагмент") =
             SecondFragment().apply {
                 arguments = Bundle().apply {
                     putString(ParamsKeys.SECOND_FRAGMENT_TITLE_KEY, title)

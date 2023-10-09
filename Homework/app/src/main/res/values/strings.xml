@@ -8,4 +8,7 @@
     <string name="first_button">Первая кнопка</string>
     <string name="second_button">Вторая кнопка</string>
     <string name="third_fragment">Третий фрагмент</string>
+    <string name="third_text">Третий текст</string>
+    <string name="second_text">Второй текст</string>
+    <string name="first_text">Первый текст</string>
 </resources>
