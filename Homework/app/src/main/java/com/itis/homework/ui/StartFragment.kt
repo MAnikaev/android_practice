@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import com.itis.homework.model.BaseActivity
 import com.itis.homework.R
 import com.itis.homework.databinding.FragmentStartBinding
@@ -44,27 +45,31 @@ class StartFragment : Fragment(R.layout.fragment_start) {
 
                 override fun onTextChanged(input: CharSequence?, start: Int, before: Int, count: Int) {
 
-                    if (input?.length == 1 && !(before > 0 && count == 0)) {
-                        changePhoneInputText("+7(9$input", 5)
+                    if (before > 0 && count == 0) {
+                        return
                     }
-                    else if (input?.length == 6 && !(before > 0 && count == 0)) {
-                        changePhoneInputText("$input)-", 8)
-                    }
-                    else if (input?.length == 11 && !(before > 0 && count == 0)) {
-                        changePhoneInputText("$input-", 12)
-                    }
-                    else if (input?.length == 14 && !(before > 0 && count == 0)) {
-                        changePhoneInputText("$input-", 15)
-                    }
-                    else if (input?.length == 18 && !(before > 0 && count == 0)) {
-                        changePhoneInputText(input.subSequence(0, input.length - 1).toString(), 17)
+                    when (input?.length) {
+                        1 ->
+                            changePhoneInputText("+7(9$input", 5)
+                        6 ->
+                            changePhoneInputText("$input)-", 8)
+                        11 ->
+                            changePhoneInputText("$input-", 12)
+                        14 ->
+                            changePhoneInputText("$input-", 15)
+                        18 ->
+                            changePhoneInputText(input.subSequence(0, input.length - 1).toString(), 17)
                     }
                 }
 
                 override fun afterTextChanged(p0: Editable?) {
                     val phoneRegex = """^\+7\(9\d{2}\)-\d{3}-\d{2}-\d{2}$""".toRegex()
                     val countRegex = "^[1-9]|10\$".toRegex()
-                    startBtn.isEnabled = phoneRegex.matches(phoneEt.text.toString()) && countRegex.matches(questionsCountEt.text.toString())
+                    val isValid = phoneRegex.matches(phoneEt.text.toString()) && countRegex.matches(questionsCountEt.text.toString())
+                    startBtn.isEnabled = isValid
+                    if (!isValid) {
+                        Snackbar.make(binding.root, "Неверно введены данные", 1000).show()
+                    }
                 }
 
             })
@@ -82,7 +87,11 @@ class StartFragment : Fragment(R.layout.fragment_start) {
                 override fun afterTextChanged(p0: Editable?) {
                     val phoneRegex = """^\+7\(9\d{2}\)-\d{3}-\d{2}-\d{2}$""".toRegex()
                     val countRegex = "^[1-9]|10\$".toRegex()
-                    startBtn.isEnabled = phoneRegex.matches(phoneEt.text.toString()) && countRegex.matches(questionsCountEt.text.toString())
+                    val isValide = phoneRegex.matches(phoneEt.text.toString()) && countRegex.matches(questionsCountEt.text.toString())
+                    startBtn.isEnabled = isValide
+                    if (!isValide) {
+                        Snackbar.make(binding.root, "Неверно введены данные", 1000).show()
+                    }
                 }
             })
         }

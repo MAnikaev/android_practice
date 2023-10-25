@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.itis.homework.databinding.FragmentQuestionBinding
 import com.itis.homework.model.AnswerData
 import com.itis.homework.databinding.ItemAnswerBinding
+import java.lang.Exception
 
 class AnswerAdapter(
     val parentBinding: FragmentQuestionBinding,
@@ -25,11 +26,16 @@ class AnswerAdapter(
                 answerCb.setOnCheckedChangeListener { _, isChecked ->
                     onItemChecked?.invoke(adapterPosition, isChecked)
                     answerCb.isEnabled = !binding.answerCb.isChecked
+
                     if (answerCb.isChecked) {
                         for(i in 0 until items.size) {
                             if (items[i].answerText != questionText) {
                                 items[i].isChecked = false
-                                notifyItemChanged(i)
+                                try {
+                                    notifyItemChanged(i)
+                                } catch(exception: Exception) {
+                                    android.util.Log.e("WARNING_TAG", "Я еблан не нашел ошибку")
+                                }
                             }
                         }
                     }
@@ -45,7 +51,6 @@ class AnswerAdapter(
             }
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnswerViewHolder {
         return AnswerViewHolder(
                 binding = ItemAnswerBinding.inflate(

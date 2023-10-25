@@ -1,9 +1,10 @@
 package com.itis.homework.utils
 
 import com.itis.homework.model.AnswerData
+import kotlin.random.Random
 
 object AnswersGenerator {
-    fun getAnswers(count: Int) : MutableList<AnswerData> {
+    fun getAnswers() : MutableList<AnswerData> {
         val list = mutableListOf<AnswerData>(
             AnswerData("1", false),
             AnswerData("2", false),
@@ -16,6 +17,6 @@ object AnswersGenerator {
             AnswerData("9", false),
             AnswerData("10", false),
         )
-        return list.subList(0, count - 1)
+        return list.subList(0, Random.nextInt(4, 9))
     }
 }
