@@ -11,6 +11,7 @@ import com.itis.homework.R
 import com.itis.homework.databinding.FragmentQuestionBinding
 import com.itis.homework.model.AnswerData
 import com.itis.homework.utils.ParamKeys
+import java.lang.Exception
 import kotlin.random.Random
 
 class QuestionFragment : Fragment(R.layout.fragment_question) {
@@ -20,6 +21,8 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
     private var adapter: AnswerAdapter? = null
 
     var items: MutableList<AnswerData>? = null
+
+    var checkArray: Array<Boolean>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,11 +34,13 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
         adapter = AnswerAdapter(
             parentBinding = binding,
             items = items!!,
-            onItemChecked = { position, isChecked ->
+            onItemChecked = { checkArray, position, isChecked ->
                 adapter?.items?.let {
                     it[position].isChecked = isChecked
+                    checkArray[arguments?.getString(ParamKeys.QUESTION_NUMBER_KEY).toString().toInt() - 1] = true
                 }
-            }
+            },
+            checkArray!!
         )
         binding.answersRv.adapter = adapter
     }

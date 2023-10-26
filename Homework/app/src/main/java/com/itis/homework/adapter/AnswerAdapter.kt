@@ -11,12 +11,13 @@ import java.lang.Exception
 class AnswerAdapter(
     val parentBinding: FragmentQuestionBinding,
     val items: MutableList<AnswerData>,
-    private val onItemChecked: ((Int, Boolean) -> Unit)? = null
+    private val onItemChecked: ((Array<Boolean>, Int,  Boolean) -> Unit)? = null,
+    val checkArray: Array<Boolean>
 ) : RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>() {
 
     inner class AnswerViewHolder(
         private val binding: ItemAnswerBinding,
-        private val onItemChecked: ((Int, Boolean) -> Unit)? = null
+        private val onItemChecked: ((Array<Boolean>, Int,  Boolean) -> Unit)? = null
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var questionText: String? = null
@@ -24,7 +25,7 @@ class AnswerAdapter(
         init {
             with(binding) {
                 answerCb.setOnCheckedChangeListener { _, isChecked ->
-                    onItemChecked?.invoke(adapterPosition, isChecked)
+                    onItemChecked?.invoke(checkArray, adapterPosition, isChecked)
                     answerCb.isEnabled = !binding.answerCb.isChecked
 
                     if (answerCb.isChecked) {
@@ -32,7 +33,7 @@ class AnswerAdapter(
                             if (items[i].answerText != questionText) {
                                 items[i].isChecked = false
                                 try {
-                                    notifyItemChanged(i)
+                                    notifyItemChanged(i) //Простите за это((((
                                 } catch(exception: Exception) {
                                     android.util.Log.e("WARNING_TAG", "Я еблан не нашел ошибку")
                                 }

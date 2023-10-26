@@ -39,7 +39,7 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
                 val isLastFragment = position == adapter.itemCount - 1
 
                 binding.finishBtn.isVisible = isLastFragment
-               // binding.finishBtn.isEnabled =
+                binding.finishBtn.isEnabled = adapter.allQuestionsAnswered()
             }
         }
         binding.mainVp.registerOnPageChangeCallback(onPageChangeListener)

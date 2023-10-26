@@ -11,7 +11,7 @@ import kotlin.random.Random
 
 class QuestionAdapter(private val questions: Array<String>, private val questionCount: Int, manager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(manager, lifecycle) {
 
-    val checkArray = Array<Boolean>(questionCount) { _ -> true }
+    val checkBoxCheckedArray = Array<Boolean>(questionCount) { _ -> false }
 
     private val fragmentsData = Array<MutableList<AnswerData>>(questionCount) {_ -> AnswersGenerator.getAnswers()}
 
@@ -19,6 +19,9 @@ class QuestionAdapter(private val questions: Array<String>, private val question
     override fun createFragment(position: Int): Fragment =
         QuestionFragment.getInstance(question = questions[position], (position + 1).toString()).apply {
             items = fragmentsData[position]
+            checkArray = checkBoxCheckedArray
         }
+    fun allQuestionsAnswered(): Boolean =
+        checkBoxCheckedArray.all { item -> item }
 }
 
