@@ -3,7 +3,9 @@ package com.itis.homework.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -68,7 +70,9 @@ class StartFragment : Fragment(R.layout.fragment_start) {
                     val isValid = phoneRegex.matches(phoneEt.text.toString()) && countRegex.matches(questionsCountEt.text.toString())
                     startBtn.isEnabled = isValid
                     if (!isValid) {
-                        Snackbar.make(binding.root, "Неверно введены данные", 1000).show()
+                        val snack = Snackbar.make(binding.root, "Неверно введены данные", 1000)
+                        (snack.view.layoutParams as? FrameLayout.LayoutParams)?.gravity = Gravity.CENTER
+                        snack.show()
                     }
                 }
 
