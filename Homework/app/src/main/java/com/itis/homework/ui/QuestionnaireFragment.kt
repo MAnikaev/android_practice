@@ -30,13 +30,13 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
             questions = resources.getStringArray(R.array.questions),
             questionCount = arguments?.getString(ParamKeys.QUESTION_COUNT_KEY).toString().toInt(),
             manager = parentFragmentManager,
-            lifecycle = lifecycle
+            lifecycle = lifecycle,
         )
 
         binding.mainVp.adapter = adapter
         val onPageChangeListener = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                val isLastFragment = position == adapter.itemCount - 1
+                val isLastFragment = position % adapter.questionCount == adapter.questionCount - 1
 
                 binding.finishBtn.isVisible = isLastFragment
                 binding.finishBtn.isEnabled = adapter.allQuestionsAnswered()

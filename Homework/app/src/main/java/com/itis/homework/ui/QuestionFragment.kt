@@ -9,6 +9,7 @@ import com.itis.homework.adapter.AnswerAdapter
 import com.itis.homework.utils.AnswersGenerator
 import com.itis.homework.R
 import com.itis.homework.databinding.FragmentQuestionBinding
+import com.itis.homework.databinding.FragmentQuestionnaireBinding
 import com.itis.homework.model.AnswerData
 import com.itis.homework.utils.ParamKeys
 import java.lang.Exception
@@ -17,11 +18,8 @@ import kotlin.random.Random
 class QuestionFragment : Fragment(R.layout.fragment_question) {
 
     private val binding: FragmentQuestionBinding by viewBinding(FragmentQuestionBinding::bind)
-
     private var adapter: AnswerAdapter? = null
-
     var items: MutableList<AnswerData>? = null
-
     var checkArray: Array<Boolean>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,12 +30,12 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
     }
     private fun initRecyclerView() {
         adapter = AnswerAdapter(
-            parentBinding = binding,
             items = items!!,
             onItemChecked = { checkArray, position, isChecked ->
                 adapter?.items?.let {
+                    val numberOfQuestion = arguments?.getString(ParamKeys.QUESTION_NUMBER_KEY).toString().toInt()
                     it[position].isChecked = isChecked
-                    checkArray[arguments?.getString(ParamKeys.QUESTION_NUMBER_KEY).toString().toInt() - 1] = true
+                    checkArray[numberOfQuestion - 1] = true
                 }
             },
             checkArray!!

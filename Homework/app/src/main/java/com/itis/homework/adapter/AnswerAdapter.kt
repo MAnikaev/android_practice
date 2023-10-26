@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.itis.homework.databinding.FragmentQuestionBinding
+import com.itis.homework.databinding.FragmentQuestionnaireBinding
 import com.itis.homework.model.AnswerData
 import com.itis.homework.databinding.ItemAnswerBinding
 import java.lang.Exception
 
 class AnswerAdapter(
-    val parentBinding: FragmentQuestionBinding,
     val items: MutableList<AnswerData>,
     private val onItemChecked: ((Array<Boolean>, Int,  Boolean) -> Unit)? = null,
-    val checkArray: Array<Boolean>
+    val checkArray: Array<Boolean>,
 ) : RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>() {
 
     inner class AnswerViewHolder(
@@ -35,7 +35,7 @@ class AnswerAdapter(
                                 try {
                                     notifyItemChanged(i) //Простите за это((((
                                 } catch(exception: Exception) {
-                                    android.util.Log.e("WARNING_TAG", "Я еблан не нашел ошибку")
+                                    android.util.Log.e("WARNING_TAG", "ERROR")
                                 }
                             }
                         }
