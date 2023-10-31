@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Homework</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="news_count_et_hint">Введите количество вопросов</string>
+    <string name="to_news_btn_text">Перейти к новостям</string>
+    <string name="add_news_btn_text">Добавить новости</string>
+    <string name="dialog_title_text">Сколько новостей нужно добавить?</string>
 </resources>
