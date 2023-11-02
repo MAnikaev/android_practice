@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.CountDialogFragment">
+
+    <TextView
+        android:id="@+id/dialog_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/dialog_title_text"
+        android:textSize="24sp"
+        android:padding="8dp"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/news_count_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dialog_title_tv"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:hint="@string/news_count_et_hint"/>
+
+    <Button
+        android:id="@+id/add_news_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/news_count_et"
+        android:layout_margin="16dp"
+        android:text="@string/add_news_btn_text"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
