@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.itis.homework.R
 import com.itis.homework.adapter.NewsAdapter
@@ -15,43 +16,64 @@ import com.itis.homework.model.BaseActivity
 import com.itis.homework.utils.ActionType
 import com.itis.homework.utils.NewsRepository
 import com.itis.homework.utils.ParamsKey
+import com.itis.homework.utils.ViewHolderType
 
 class NewsFragment : Fragment(R.layout.fragment_news) {
 
     private val binding: FragmentNewsBinding by viewBinding(FragmentNewsBinding::bind)
 
     var adapter: NewsAdapter? = null
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val newsCount = arguments?.getInt(ParamsKey.NEWS_COUNT_KEY)
         initRecyclerView(newsCount)
-        initButtons()
     }
-
     private fun initRecyclerView(newsCount: Int?) {
+        val dates = mutableListOf<String>()
+        dates.addAll(resources.getStringArray(R.array.dates))
+
+        val news = NewsRepository.getNews(newsCount)
         val adapter = NewsAdapter(
             diffUtil = NewsDiffUtilItemCallback(),
-            parentBinding = binding,
-            context = requireContext(),
-            items = NewsRepository.getNews(newsCount)
+            news = news,
+            buttonAction = {
+                CountDialogFragment().show(parentFragmentManager, CountDialogFragment.COUNT_DIALOG_FRAGMENT_TAG)
+            },
+            imageAction = {position ->
+                val newsData = news[position]
+                (requireActivity() as? BaseActivity)?.goToScreen(
+                    action = ActionType.Replace,
+                    destination = DetailNewsFragment.getInstance(title = newsData.title, imageUrl = newsData.imageUrl, description = newsData.description),
+                    tag = DetailNewsFragment.DETAIL_NEWS_FRAGMENT_TAG
+                )
+            },
+            dates = dates
         )
         with(binding) {
             newsRv.adapter = adapter
             this@NewsFragment.adapter = adapter
             if (newsCount != null) {
-                newsRv.layoutManager =
-                    if(newsCount <= 12)
-                        LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-                    else
-                        GridLayoutManager(requireContext(), 2)
-            }
-        }
-    }
-    private fun initButtons() {
-        with(binding) {
-            addNewsBtn.setOnClickListener {
-                CountDialogFragment().show(parentFragmentManager, CountDialogFragment.COUNT_DIALOG_FRAGMENT_TAG)
+                if(newsCount > 12) {
+                    val layoutManager = GridLayoutManager(requireContext(), 2)
+                    layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                        override fun getSpanSize(position: Int): Int =
+                            when (adapter.getItemViewType(position)) {
+                                ViewHolderType.Button.ordinal -> 2
+                                ViewHolderType.News.ordinal -> 1
+                                ViewHolderType.Date.ordinal -> 2
+                                else -> 1
+                            }
+
+
+                    }
+                    newsRv.layoutManager = layoutManager
+                } else {
+                    val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                    newsRv.layoutManager = layoutManager
+                }
             }
         }
     }

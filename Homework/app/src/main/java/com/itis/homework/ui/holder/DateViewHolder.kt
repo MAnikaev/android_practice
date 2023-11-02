@@ -8,7 +8,9 @@ class DateViewHolder(
     private val binding: ItemDateBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind() {
-
+    fun bindItem(date: String) {
+        with(binding) {
+            dateTv.text = date
+        }
     }
 }

@@ -22,6 +22,7 @@ class MainActivity : BaseActivity() {
 
     override fun goToScreen(action: ActionType, destination: Fragment, tag: String) {
         supportFragmentManager.beginTransaction().apply {
+            addToBackStack(null)
             when(action) {
                 ActionType.Replace -> {
                     replace(containerId, destination, tag)

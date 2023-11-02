@@ -6,4 +6,5 @@
     <string name="to_news_btn_text">Перейти к новостям</string>
     <string name="add_news_btn_text">Добавить новости</string>
     <string name="dialog_title_text">Сколько новостей нужно добавить?</string>
+    <string name="news_img_hint">news_image</string>
 </resources>

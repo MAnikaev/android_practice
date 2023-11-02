@@ -50,12 +50,7 @@ class CountDialogFragment : BottomSheetDialogFragment() {
             newsCountEt.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-                override fun onTextChanged(
-                    input: CharSequence?,
-                    start: Int,
-                    before: Int,
-                    count: Int
-                ) {
+                override fun onTextChanged(input: CharSequence?, start: Int, before: Int, count: Int) {
                     if (input?.length == 2) {
                         newsCountEt.apply {
                             setText(input.subSequence(0, input.length - 1))
@@ -78,7 +73,7 @@ class CountDialogFragment : BottomSheetDialogFragment() {
                 val count = newsCountEt.text.toString().toInt()
                 val newsFragment = parentFragmentManager.findFragmentByTag(NewsFragment.NEWS_FRAGMENT_TAG) as? NewsFragment
                 val newsAdapter = newsFragment?.adapter
-                newsAdapter?.setNews(NewsRepository.addNews(count, newsAdapter.items))
+                newsAdapter?.setNewNews(NewsRepository.addNews(count, newsAdapter.news))
                 this@CountDialogFragment.dismiss()
             }
         }

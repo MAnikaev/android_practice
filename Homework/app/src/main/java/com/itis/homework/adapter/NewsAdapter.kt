@@ -3,47 +3,89 @@ package com.itis.homework.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.itis.homework.databinding.FragmentNewsBinding
+import com.itis.homework.databinding.ItemButtonBinding
+import com.itis.homework.databinding.ItemDateBinding
 import com.itis.homework.databinding.ItemNewsBinding
 import com.itis.homework.model.NewsData
+import com.itis.homework.ui.fragments.CountDialogFragment
+import com.itis.homework.ui.holder.ButtonViewHolder
+import com.itis.homework.ui.holder.DateViewHolder
 import com.itis.homework.ui.holder.NewsViewHolder
+import com.itis.homework.utils.ViewHolderType
+import java.util.Date
 
 class NewsAdapter(
     diffUtil: DiffUtil.ItemCallback<NewsData>,
-    private val parentBinding: FragmentNewsBinding,
-    private val context: Context,
-    var items: MutableList<NewsData>,
-) : ListAdapter<NewsData, NewsViewHolder>(diffUtil) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder =
-        NewsViewHolder(
-            binding = ItemNewsBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false)
-        ) { pos ->
-            items[pos].isFav = !items[pos].isFav
-            notifyItemChanged(pos, items[pos].isFav)
+    var news: MutableList<NewsData>,
+    private val buttonAction: () -> Unit,
+    private val imageAction: (Int) -> Unit,
+    private val dates: MutableList<String>
+) : ListAdapter<NewsData, RecyclerView.ViewHolder>(diffUtil) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        when(viewType) {
+            ViewHolderType.News.ordinal -> {
+                return NewsViewHolder(
+                    binding = ItemNewsBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false),
+                    onImageClicked = imageAction,
+                    onFavClicked = { pos ->
+                    news[pos].isFav = !news[pos].isFav
+                    notifyItemChanged(pos, news[pos].isFav)
+                })
+            }
+            ViewHolderType.Date.ordinal -> {
+                return DateViewHolder(
+                    binding = ItemDateBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false)
+                )
+            }
+            else -> {
+                return ButtonViewHolder(
+                    binding = ItemButtonBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false),
+                    action = buttonAction
+                )
+            }
         }
-
-    override fun getItemCount(): Int = items.size
-
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.bindItem(items[position])
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setNews(newNews: MutableList<NewsData>) {
-        items = newNews
-        parentBinding.newsRv.layoutManager =
-            if(items.size <= 12)
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            else
-                GridLayoutManager(context, 2)
+    override fun getItemCount(): Int = news.size + 1 + news.size / 8
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(holder) {
+            is NewsViewHolder -> {
+                holder.bindItem(news[position - 1 - (position + 1) / 8])
+            }
+            is DateViewHolder -> {
+                holder.bindItem(dates[(position - 1) / 8 - 1])
+            }
+            is ButtonViewHolder -> Unit
+            else -> Unit
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int =
+        if(position == 0) {
+            ViewHolderType.Button.ordinal
+        } else if (position % 9 == 0) {
+            ViewHolderType.Date.ordinal
+        } else {
+            ViewHolderType.News.ordinal
+        }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setNewNews(newNews: MutableList<NewsData>) {
+        news = newNews
         notifyDataSetChanged()
     }
 }
