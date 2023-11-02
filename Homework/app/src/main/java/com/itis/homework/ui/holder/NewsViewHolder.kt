@@ -9,20 +9,23 @@ import kotlin.time.measureTimedValue
 
 class NewsViewHolder(
     private val binding: ItemNewsBinding,
-    private val onFavClicked: (position: Int) -> Unit,
-    private val onImageClicked: (Int) -> Unit
+    private val onFavClicked: (position: Int, listPosition: Int) -> Unit,
+    private val onImageClicked: (position: Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
         with(binding) {
-            val position = adapterPosition
             favouriteBtn.setOnClickListener {
-                //onFavClicked.invoke(position - 1 - (position + 1) / 8)
-                onFavClicked.invoke(adapterPosition)
+                if (adapterPosition == 1) {
+                    onFavClicked.invoke(1, 0)
+                } else if (adapterPosition == 2) {
+                    onFavClicked.invoke(2, 1)
+                } else {
+                    onFavClicked.invoke(adapterPosition, adapterPosition - 1 - adapterPosition / 9)
+                }
             }
             newsImage.setOnClickListener {
-                //onImageClicked.invoke(position - 1 - (position + 1) / 8)
-                onImageClicked.invoke(adapterPosition - 1)
+                onImageClicked.invoke(adapterPosition - 1 - adapterPosition / 9)
             }
         }
     }

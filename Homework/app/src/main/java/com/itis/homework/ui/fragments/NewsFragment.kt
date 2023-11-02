@@ -13,6 +13,7 @@ import com.itis.homework.adapter.NewsAdapter
 import com.itis.homework.adapter.diffutils.NewsDiffUtilItemCallback
 import com.itis.homework.databinding.FragmentNewsBinding
 import com.itis.homework.model.BaseActivity
+import com.itis.homework.model.NewsData
 import com.itis.homework.utils.ActionType
 import com.itis.homework.utils.NewsRepository
 import com.itis.homework.utils.ParamsKey
@@ -21,46 +22,50 @@ import com.itis.homework.utils.ViewHolderType
 class NewsFragment : Fragment(R.layout.fragment_news) {
 
     private val binding: FragmentNewsBinding by viewBinding(FragmentNewsBinding::bind)
-
     var adapter: NewsAdapter? = null
+    var news: MutableList<NewsData>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+
         val newsCount = arguments?.getInt(ParamsKey.NEWS_COUNT_KEY)
-        initRecyclerView(newsCount)
-    }
-    private fun initRecyclerView(newsCount: Int?) {
+        news = NewsRepository.getNews(newsCount)
         val dates = mutableListOf<String>()
         dates.addAll(resources.getStringArray(R.array.dates))
 
-        val news = NewsRepository.getNews(newsCount)
-        val adapter = NewsAdapter(
+
+        adapter = NewsAdapter(
             diffUtil = NewsDiffUtilItemCallback(),
-            news = news,
+            news = news!!,
             buttonAction = {
                 CountDialogFragment().show(parentFragmentManager, CountDialogFragment.COUNT_DIALOG_FRAGMENT_TAG)
             },
             imageAction = {position ->
-                val newsData = news[position]
+                val newsData = news!![position]
                 (requireActivity() as? BaseActivity)?.goToScreen(
                     action = ActionType.Replace,
                     destination = DetailNewsFragment.getInstance(title = newsData.title, imageUrl = newsData.imageUrl, description = newsData.description),
-                    tag = DetailNewsFragment.DETAIL_NEWS_FRAGMENT_TAG
+                    tag = DetailNewsFragment.DETAIL_NEWS_FRAGMENT_TAG,
                 )
             },
             dates = dates
         )
+
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecyclerView(news!!.size, news!!)
+
+    }
+    private fun initRecyclerView(newsCount: Int?, news: MutableList<NewsData>) {
         with(binding) {
             newsRv.adapter = adapter
-            this@NewsFragment.adapter = adapter
             if (newsCount != null) {
                 if(newsCount > 12) {
                     val layoutManager = GridLayoutManager(requireContext(), 2)
                     layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                         override fun getSpanSize(position: Int): Int =
-                            when (adapter.getItemViewType(position)) {
+                            when (adapter!!.getItemViewType(position)) {
                                 ViewHolderType.Button.ordinal -> 2
                                 ViewHolderType.News.ordinal -> 1
                                 ViewHolderType.Date.ordinal -> 2

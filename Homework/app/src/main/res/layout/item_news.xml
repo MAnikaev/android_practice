@@ -35,7 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:elevation="8dp"
-        android:text="Какой то текст"
+        android:text="@string/some_text"
         android:textSize="18sp"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"

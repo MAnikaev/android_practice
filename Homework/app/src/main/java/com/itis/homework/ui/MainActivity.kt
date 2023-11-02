@@ -20,9 +20,12 @@ class MainActivity : BaseActivity() {
         goToScreen(ActionType.Add, StartFragment.getInstance())
     }
 
-    override fun goToScreen(action: ActionType, destination: Fragment, tag: String) {
+    override fun goToScreen(action: ActionType, destination: Fragment, tag: String, animationEnter: Int?, animationExit: Int?) {
         supportFragmentManager.beginTransaction().apply {
             addToBackStack(null)
+            if(animationEnter != null && animationExit != null) {
+                setCustomAnimations(animationEnter, animationExit)
+            }
             when(action) {
                 ActionType.Replace -> {
                     replace(containerId, destination, tag)

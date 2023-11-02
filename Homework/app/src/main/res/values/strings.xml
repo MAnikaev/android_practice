@@ -7,4 +7,8 @@
     <string name="add_news_btn_text">Добавить новости</string>
     <string name="dialog_title_text">Сколько новостей нужно добавить?</string>
     <string name="news_img_hint">news_image</string>
+    <string name="news_name_tv_text">Название новости</string>
+    <string name="news_description_tv_text">Awesome news description</string>
+    <string name="some_date_text">Какая то дата</string>
+    <string name="some_text">Какой то текст</string>
 </resources>

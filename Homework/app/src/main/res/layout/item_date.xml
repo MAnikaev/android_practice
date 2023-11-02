@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         android:padding="8dp"
-        android:text="Какая то дата"
+        android:text="@string/some_date_text"
         android:textSize="24sp"
         android:textAlignment="center"/>
 

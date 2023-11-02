@@ -135,7 +135,7 @@ object NewsRepository {
         newList.addAll(oldList)
         for(i in 0 until count) {
             val index = Random.nextInt(0, newList.size)
-            newList.add(index, news[index])
+            newList.add(index, news[index % news.size])
         }
 
         return newList

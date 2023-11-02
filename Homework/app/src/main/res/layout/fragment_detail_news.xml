@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@id/news_image"
         android:textSize="36sp"
         android:layout_margin="16dp"
-        android:text="Название новости"/>
+        android:text="@string/news_name_tv_text"/>
 
     <TextView
         android:id="@+id/news_description_tv"
@@ -30,6 +30,6 @@
         app:layout_constraintTop_toBottomOf="@id/news_name_tv"
         android:textSize="24sp"
         android:layout_margin="16dp"
-        android:text="Awesome news description"/>
+        android:text="@string/news_description_tv_text"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

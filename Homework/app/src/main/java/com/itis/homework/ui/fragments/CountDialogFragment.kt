@@ -74,6 +74,7 @@ class CountDialogFragment : BottomSheetDialogFragment() {
                 val newsFragment = parentFragmentManager.findFragmentByTag(NewsFragment.NEWS_FRAGMENT_TAG) as? NewsFragment
                 val newsAdapter = newsFragment?.adapter
                 newsAdapter?.setNewNews(NewsRepository.addNews(count, newsAdapter.news))
+                newsFragment!!.news = newsAdapter!!.news
                 this@CountDialogFragment.dismiss()
             }
         }

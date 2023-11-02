@@ -38,9 +38,10 @@ class NewsAdapter(
                     binding = ItemNewsBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false),
                     onImageClicked = imageAction,
-                    onFavClicked = { pos ->
-                    news[pos].isFav = !news[pos].isFav
-                    notifyItemChanged(pos, news[pos].isFav)
+                    onFavClicked = { pos, listPos ->
+                        val newFavFlag = !(news[listPos].isFav)
+                    news[listPos].isFav = newFavFlag
+                    notifyItemChanged(pos, newFavFlag)
                 })
             }
             ViewHolderType.Date.ordinal -> {
