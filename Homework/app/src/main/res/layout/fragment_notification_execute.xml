@@ -30,7 +30,8 @@
         android:id="@+id/send_notification_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notification_body_et"
+        android:layout_marginTop="16dp"
         android:text="@string/send_notification_btn_text"
         android:textSize="24sp"/>
 

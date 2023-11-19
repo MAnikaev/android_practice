@@ -25,4 +25,10 @@
     <string name="stop_on_background_tv_text">Останавливать при сворачивании</string>
     <string name="stop_on_background_cb_text">ДА</string>
     <string name="coroutine_start_btn_text">Запустить корутины</string>
+    <string name="permission_confirmed_message">Спасибо</string>
+    <string name="reject_permission_dialog_title">Вы отклонили разрешения</string>
+    <string name="reject_permission_dialog_desc">Перейдите в настройки и установите разрешения самостоятельно</string>
+    <string name="reject_permission_dialog_pos_btn_text">Ok</string>
+    <string name="rationale_permission_text">Разреши по братски</string>
+    <string name="package_scheme_text">package</string>
 </resources>
