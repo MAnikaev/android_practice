@@ -81,7 +81,8 @@ class MainActivity : BaseActivity() {
                     Toast.makeText(this, "Добро пожаловать!", Toast.LENGTH_LONG).show()
                 }
                 ActionType.SettingsNavigate.value -> {
-                    findNavController(R.id.main_container).navigate(R.id.action_notificationExecuteFragment_to_notificationSettingsFragment)
+                    findNavController(R.id.main_container).popBackStack()
+                    findNavController(R.id.main_container).navigate(R.id.notificationSettingsFragment)
                 }
                 -1 -> Unit
             }

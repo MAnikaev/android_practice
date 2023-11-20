@@ -42,7 +42,7 @@ object NotificationSender {
 
             val pendingIntent = PendingIntent.getActivity(
                 ctx,
-                101,
+                100,
                 intent,
                 PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
             )
@@ -53,14 +53,18 @@ object NotificationSender {
                 setContentText(body)
                 setAutoCancel(true)
                 setContentIntent(pendingIntent)
+//                priority = when(importance) {
+//                    NotificationImportance.High -> NotificationManager.IMPORTANCE_DEFAULT
+//                    NotificationImportance.Medium -> NotificationManager.IMPORTANCE_LOW
+//                    NotificationImportance.Urgent -> NotificationManager.IMPORTANCE_HIGH
+//                }
                 when(visibility) {
                     NotificationVisibility.Private -> setVisibility(VISIBILITY_PRIVATE)
                     NotificationVisibility.Public -> setVisibility(VISIBILITY_PUBLIC)
                     NotificationVisibility.Secret -> setVisibility(VISIBILITY_SECRET)
                 }
                 if(isDetail) {
-                    setStyle(NotificationCompat.BigTextStyle()
-                        .bigText(title))
+                    setStyle(NotificationCompat.BigTextStyle())
                 }
                 if(isHaveButtons) {
                     val toastIntent = Intent(ctx, MainActivity::class.java)
@@ -73,10 +77,10 @@ object NotificationSender {
                     )
 
                     val settingsIntent = Intent(ctx, MainActivity::class.java)
-                    toastIntent.putExtra(ParamsKeys.ACTION_KEY, ActionType.SettingsNavigate.value)
+                    settingsIntent.putExtra(ParamsKeys.ACTION_KEY, ActionType.SettingsNavigate.value)
                     val settingsPendingIntent = PendingIntent.getActivity(
                         ctx,
-                        101,
+                        102,
                         settingsIntent,
                         PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_MUTABLE
                     )
@@ -85,7 +89,6 @@ object NotificationSender {
                     addAction(R.drawable.baseline_edit_notifications_24, "Settings", settingsPendingIntent)
                 }
             }
-
 
             manager.notify(id, notification.build())
         }
