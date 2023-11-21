@@ -24,40 +24,33 @@ import kotlin.random.Random
 
 class NotificationExecuteFragment : Fragment(R.layout.fragment_notification_execute) {
     private val binding: FragmentNotificationExecuteBinding by viewBinding(FragmentNotificationExecuteBinding::bind)
-
+    private val notificationSettings = mutableMapOf<String, Any>()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setDefaultSettings()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.sendNotificationBtn.setOnClickListener {
             val notificationTitle = binding.notificationTitleEt.text.toString()
             val notificationDesc = binding.notificationBodyEt.text.toString()
-            val settings = getNotificationSettings()
-//            NotificationSender.sendNotification(
-//                ctx = requireContext(),
-//                id = Random.nextInt(-1000000, 1000000),
-//                importance = settings["importance"] as NotificationImportance,
-//                visibility = settings["visibility"] as NotificationVisibility,
-//                title = notificationTitle,
-//                body = notificationDesc,
-//                isDetail = settings["isDetail"] as Boolean,
-//                isHaveButtons = settings["isHaveButtons"] as Boolean
-//            )
+            getNotificationSettings()
+            val settings = notificationSettings
             NotificationSender.sendNotification(
                 ctx = requireContext(),
                 id = Random.nextInt(-1000000, 1000000),
-                importance = NotificationImportance.Urgent,
-                visibility = NotificationVisibility.Public,
+                importance = settings["importance"] as NotificationImportance,
+                visibility = settings["visibility"] as NotificationVisibility,
                 title = notificationTitle,
                 body = notificationDesc,
-                isDetail = false,
-                isHaveButtons = true
+                isDetail = settings["isDetail"] as Boolean,
+                isHaveButtons = settings["isHaveButtons"] as Boolean
             )
         }
     }
 
-    private fun getNotificationSettings() : Map<String, Any> {
-        val notificationSettings = mutableMapOf<String, Any>()
-        setDefaultSettings(notificationSettings)
+    private fun getNotificationSettings() {
         parentFragmentManager.setFragmentResultListener(ParamsKeys.SETTINGS_FRAGMENT_RESULT_KEY, this.viewLifecycleOwner) { _, result ->
             notificationSettings["importance"] = when (result.getInt(ParamsKeys.IMPORTANCE_SETTING_KEY)) {
                 R.id.importance_high_rb -> NotificationImportance.High
@@ -74,10 +67,9 @@ class NotificationExecuteFragment : Fragment(R.layout.fragment_notification_exec
             notificationSettings["isHaveButtons"] = result.getBoolean(ParamsKeys.IS_HAVE_BUTTONS_SETTING_KEY)
             notificationSettings["isDetail"] = result.getBoolean(ParamsKeys.IS_DETAIL_SETTING_KEY)
         }
-        return notificationSettings.toMap()
     }
 
-    private fun setDefaultSettings(notificationSettings: MutableMap<String, Any>) {
+    private fun setDefaultSettings() {
         notificationSettings["importance"] = NotificationImportance.Medium
         notificationSettings["visibility"] = NotificationVisibility.Public
         notificationSettings["isHaveButtons"] = false

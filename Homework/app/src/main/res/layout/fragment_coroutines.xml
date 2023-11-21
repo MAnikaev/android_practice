@@ -24,7 +24,6 @@
         android:layout_marginTop="16dp"
         android:max="10"
         android:min="1"
-        android:progress="1"
         tools:targetApi="o"/>
 
     <TextView
