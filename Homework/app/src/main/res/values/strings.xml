@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">Homework</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notification_title_et_hint">Введите заголовок уведомления</string>
+    <string name="notification_body_et">Введите текст уведомления</string>
+    <string name="send_notification_btn_text">Отправить уведомление</string>
+    <string name="notification_importance_tv_text">Приоритет уведомления</string>
+    <string name="importance_medium">Medium</string>
+    <string name="importance_high">High</string>
+    <string name="importance_urgent">Urgent</string>
+    <string name="notification_privacy_tv_text">Приватность уведомления</string>
+    <string name="privacy_public">Public</string>
+    <string name="privacy_secret">Secret</string>
+    <string name="privacy_private">Private</string>
+    <string name="notification_detailing_tv_text">Детальность уведомления</string>
+    <string name="detail_cb_text">Детальная</string>
+    <string name="notification_buttons_tv_text">Кнопки у уведомления</string>
+    <string name="buttons_cb_text">Есть</string>
+    <string name="coroutines_count_tv_text">Количество корутин</string>
+    <string name="coroutines_count_min_tv_text">1</string>
+    <string name="coroutines_count_max_tv_text">10</string>
+    <string name="async_tv_text">Асинхронно</string>
+    <string name="async_cb_text">ДА</string>
+    <string name="stop_on_background_tv_text">Останавливать при сворачивании</string>
+    <string name="stop_on_background_cb_text">ДА</string>
+    <string name="coroutine_start_btn_text">Запустить корутины</string>
+    <string name="permission_confirmed_message">Спасибо</string>
+    <string name="reject_permission_dialog_title">Вы отклонили разрешения</string>
+    <string name="reject_permission_dialog_desc">Перейдите в настройки и установите разрешения самостоятельно</string>
+    <string name="reject_permission_dialog_pos_btn_text">Ok</string>
+    <string name="rationale_permission_text">Разреши по братски</string>
+    <string name="package_scheme_text">package</string>
+    <string name="confirm_button_text">Подтвердить настройки</string>
+    <string name="toast_action_title">Toast</string>
+    <string name="settings_action_title">Settings</string>
+    <string name="toast_intent_text">Добро пожаловать!</string>
+    <string name="no_internet_tv_text">Нет доступа к сети</string>
 </resources>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.CoroutinesFragment"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/coroutines_count_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/coroutines_count_tv_text"
+        android:textSize="24sp"
+        android:textAlignment="center"/>
+
+    <SeekBar
+        android:id="@+id/coroutines_count_sb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/coroutines_count_tv"
+        android:layout_marginTop="16dp"
+        android:max="10"
+        android:min="1"
+        tools:targetApi="o"/>
+
+    <TextView
+        android:id="@+id/coroutines_count_min_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/coroutines_count_sb"
+        app:layout_constraintStart_toStartOf="@id/coroutines_count_sb"
+        android:layout_marginStart="10dp"
+        android:textSize="24sp"
+        android:text="@string/coroutines_count_min_tv_text"/>
+
+    <TextView
+        android:id="@+id/coroutines_count_max_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/coroutines_count_sb"
+        app:layout_constraintEnd_toEndOf="@id/coroutines_count_sb"
+        android:textSize="24sp"
+        android:text="@string/coroutines_count_max_tv_text"/>
+
+    <TextView
+        android:id="@+id/async_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/coroutines_count_max_tv"
+        android:layout_marginTop="16dp"
+        android:text="@string/async_tv_text"
+        android:textSize="24sp"
+        android:textAlignment="center"/>
+    
+    <CheckBox
+        android:id="@+id/async_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/async_tv"
+        android:text="@string/async_cb_text"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"/>
+    
+    <TextView
+        android:id="@+id/stop_on_background_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/async_cb"
+        android:layout_marginTop="16dp"
+        android:text="@string/stop_on_background_tv_text"
+        android:textSize="24sp"
+        android:textAlignment="center"/>
+
+    <CheckBox
+        android:id="@+id/stop_on_background_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/stop_on_background_tv"
+        android:text="@string/stop_on_background_cb_text"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/coroutine_start_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/stop_on_background_cb"
+        android:layout_marginTop="16dp"
+        android:text="@string/coroutine_start_btn_text"
+        android:textSize="24sp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
