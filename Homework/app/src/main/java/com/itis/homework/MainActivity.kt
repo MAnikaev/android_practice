@@ -1,8 +1,11 @@
 package com.itis.homework
 
 import android.app.Application
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +15,8 @@ import android.text.PrecomputedText.Params
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -20,23 +25,41 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.itis.homework.databinding.ActivityMainBinding
 import com.itis.homework.models.BaseActivity
+import com.itis.homework.models.CoroutinesDataListener
+import com.itis.homework.ui.FlyModeDialogFragment
 import com.itis.homework.utils.ActionType
 import com.itis.homework.utils.ParamsKeys
 import com.itis.homework.utils.PermissionsHandler
 import kotlinx.coroutines.cancel
 import java.lang.Exception
+import java.util.concurrent.CancellationException
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), CoroutinesDataListener {
 
     private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
 
     private var permissionsHandler: PermissionsHandler? = null
+
+    private var isStopOnBackground = false
+
+    private var flyModeReceiver: BroadcastReceiver? = null
+    override fun onStop() {
+        super.onStop()
+        if(isStopOnBackground) {
+            lifecycleScope.cancel(CancellationException("PROGRESS TERMINATED"))
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        registerReceiver()
+
         val controller = (supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment).navController
         NavigationUI.setupWithNavController(binding.mainBnv, controller)
+
+
 
         val rejectAction = {
             AlertDialog.Builder(this)
@@ -73,6 +96,11 @@ class MainActivity : BaseActivity() {
         super.onNewIntent(intent)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        flyModeReceiver = null
+    }
+
     private fun requestPermission(permission: String) {
         permissionsHandler?.requestPermission(permission)
     }
@@ -81,7 +109,7 @@ class MainActivity : BaseActivity() {
         intent?.extras?.getInt(ParamsKeys.ACTION_KEY, -1).let {
             when(it) {
                 ActionType.Toast.value -> {
-                    Toast.makeText(this, "Добро пожаловать!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.toast_intent_text), Toast.LENGTH_LONG).show()
                 }
                 ActionType.SettingsNavigate.value -> {
                     findNavController(R.id.main_container).popBackStack()
@@ -92,4 +120,29 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onDataRecieved(isStopOnBackground: Boolean) {
+        this.isStopOnBackground = isStopOnBackground
+    }
+    private fun registerReceiver() {
+        flyModeReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action == Intent.ACTION_AIRPLANE_MODE_CHANGED) {
+                    val isAirplaneModeOn = intent.getBooleanExtra("state", false)
+                    if(isAirplaneModeOn) {
+                        FlyModeDialogFragment().show(supportFragmentManager, FlyModeDialogFragment.FLY_MODE_DIALOG_FRAGMENT_TAG)
+                    } else {
+                        (supportFragmentManager.findFragmentByTag(FlyModeDialogFragment.FLY_MODE_DIALOG_FRAGMENT_TAG) as? FlyModeDialogFragment)?.dismiss()
+                    }
+                }
+            }
+        }
+
+        val intentFilter = IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+        ContextCompat.registerReceiver(
+            this,
+            flyModeReceiver,
+            intentFilter,
+            ContextCompat.RECEIVER_EXPORTED
+        )
+    }
 }

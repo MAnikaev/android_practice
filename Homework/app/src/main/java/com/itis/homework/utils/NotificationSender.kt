@@ -45,6 +45,14 @@ object NotificationSender {
                         }
                     )
                     manager.createNotificationChannel(channel)
+                } else {
+                    val channel = manager.getNotificationChannel(notificationChannelId)
+                    channel.importance = when (importance) {
+                        NotificationImportance.High -> NotificationManager.IMPORTANCE_DEFAULT
+                        NotificationImportance.Medium -> NotificationManager.IMPORTANCE_LOW
+                        NotificationImportance.Urgent -> NotificationManager.IMPORTANCE_HIGH
+                    }
+                    manager.createNotificationChannel(channel)
                 }
             }
 
@@ -95,10 +103,8 @@ object NotificationSender {
                         PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_MUTABLE
                     )
 
-                    addAction(R.drawable.baseline_waves_24, "Toast", toastPendingIntent)
-                    Log.e("TEST_TAG", "TOAST ACTION ADDED")
-                    addAction(R.drawable.baseline_edit_notifications_24, "Settings", settingsPendingIntent)
-                    Log.e("TEST_TAG", "SETTINGS ACTION ADDED")
+                    addAction(R.drawable.baseline_waves_24, ctx.getString(R.string.toast_action_title), toastPendingIntent)
+                    addAction(R.drawable.baseline_edit_notifications_24, ctx.getString(R.string.settings_action_title), settingsPendingIntent)
                 }
             }
 

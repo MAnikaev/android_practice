@@ -1,7 +1,12 @@
 package com.itis.homework.ui
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.itis.homework.R
@@ -25,5 +30,4 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
             })
         }
     }
-
 }

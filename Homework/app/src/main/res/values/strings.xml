@@ -32,4 +32,8 @@
     <string name="rationale_permission_text">Разреши по братски</string>
     <string name="package_scheme_text">package</string>
     <string name="confirm_button_text">Подтвердить настройки</string>
+    <string name="toast_action_title">Toast</string>
+    <string name="settings_action_title">Settings</string>
+    <string name="toast_intent_text">Добро пожаловать!</string>
+    <string name="no_internet_tv_text">Нет доступа к сети</string>
 </resources>

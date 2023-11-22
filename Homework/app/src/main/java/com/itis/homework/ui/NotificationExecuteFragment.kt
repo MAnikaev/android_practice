@@ -2,7 +2,11 @@ package com.itis.homework.ui
 
 import android.app.Notification
 import android.app.NotificationManager
+import android.content.BroadcastReceiver
 import android.content.ContentResolver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
@@ -11,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.itis.homework.R
 import com.itis.homework.databinding.FragmentNotificationExecuteBinding
@@ -25,6 +30,7 @@ import kotlin.random.Random
 class NotificationExecuteFragment : Fragment(R.layout.fragment_notification_execute) {
     private val binding: FragmentNotificationExecuteBinding by viewBinding(FragmentNotificationExecuteBinding::bind)
     private val notificationSettings = mutableMapOf<String, Any>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setDefaultSettings()
@@ -70,7 +76,7 @@ class NotificationExecuteFragment : Fragment(R.layout.fragment_notification_exec
     }
 
     private fun setDefaultSettings() {
-        notificationSettings["importance"] = NotificationImportance.Medium
+        notificationSettings["importance"] = NotificationImportance.Urgent
         notificationSettings["visibility"] = NotificationVisibility.Public
         notificationSettings["isHaveButtons"] = false
         notificationSettings["isDetail"] = false
