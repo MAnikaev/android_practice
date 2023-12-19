@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.AuthenticationFragment">
+
+    <TextView
+        android:id="@+id/authentication_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/authentication_tv_text"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:layout_marginTop="24dp"/>
+
+    <EditText
+        android:id="@+id/email_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/authentication_tv"
+        android:hint="@string/email_et_text"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="16dp"/>
+
+    <EditText
+        android:id="@+id/password_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/email_et"
+        android:hint="@string/password_et_text"
+        android:autofillHints="emailAddress"
+        android:inputType="textPassword"
+        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="16dp"/>
+
+    <TextView
+        android:id="@+id/go_to_registration_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/password_et"
+        android:text="@string/go_to_registration_tv_text"
+        android:textAlignment="center"
+        android:textColor="@color/blue"
+        android:textSize="24sp"
+        android:layout_margin="32dp" />
+
+    <Button
+        android:id="@+id/confirm_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
+        android:text="@string/confirm_btn_text"
+        android:textSize="24sp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
