@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.AdditionFragment">
+
+    <TextView
+        android:id="@+id/addition_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/addition_tv_text"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:id="@+id/title_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/addition_tv"
+        android:hint="@string/title_et_hint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:id="@+id/year_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title_et"
+        android:hint="@string/year_et_hint"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:id="@+id/description_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/year_et"
+        android:hint="@string/description_et_hint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:id="@+id/image_url_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/description_et"
+        android:hint="@string/image_url_et_hint"
+        android:importantForAutofill="no"
+        android:inputType="textUri"
+        android:layout_margin="16dp"/>
+
+    <Button
+        android:id="@+id/add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
+        android:text="@string/add_btn_text"
+        android:textSize="24sp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
