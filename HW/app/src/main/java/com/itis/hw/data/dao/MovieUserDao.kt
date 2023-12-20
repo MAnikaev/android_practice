@@ -18,6 +18,12 @@ interface MovieUserDao {
     @Delete
     fun deleteUserMovieJoin(userMovieJoin: UserMovieCrossRef)
 
+    @Query("DELETE FROM movie_user WHERE movie_id = :movieId")
+    fun deleteAllMovieCrossRefs(movieId: Int)
+
     @Query("SELECT movie_id FROM movie_user WHERE user_email = :email")
     fun getMovieIdsForUser(email: String) : List<Int>
+
+    @Query("DELETE FROM movie_user WHERE user_email = :userEmail")
+    fun deleteAllUserCrossRefs(userEmail: String)
 }

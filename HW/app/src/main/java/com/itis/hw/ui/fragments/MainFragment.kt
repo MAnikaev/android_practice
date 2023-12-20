@@ -124,11 +124,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 Session::class.java
             ).userEmail
 
-            ServiceLocator.getDbInstance().movieUserDao().deleteUserMovieJoin(
-                UserMovieCrossRef(
-                    userEmail = userEmail,
-                    movieId = id
-            ))
+            ServiceLocator.getDbInstance().movieUserDao().deleteAllMovieCrossRefs(id)
 
             ServiceLocator.getDbInstance().movieDao().deleteMovie(id)
 
@@ -142,6 +138,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     favoriteMoviesAdapter?.notifyItemRemoved(favIndex)
                     favoriteMovies.removeAt(favIndex)
                 }
+
+                if(favoriteMovies.size == 0)
+                    binding.favMoviesTv.visibility = View.GONE
+
             }
         }
     }

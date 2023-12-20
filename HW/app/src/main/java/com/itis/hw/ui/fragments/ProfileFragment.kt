@@ -83,6 +83,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         Session::class.java
                     ).userEmail
 
+                    ServiceLocator.getDbInstance().movieUserDao().deleteAllUserCrossRefs(userEmail)
                     ServiceLocator.getDbInstance().userDao().deleteUser(userEmail)
                     ServiceLocator.getPrefs().edit().remove(ParamKeys.SESSION_KEY).apply()
                 }
